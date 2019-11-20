@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Rock Paper Scissors</title>
+	<link rel="stylesheet" href="Styles/style.css" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<h1>Rock, Paper, or Scissors?</h1>
+	</header>	  
+
+	<div id="game">
+		<button class="buttons" id="rock"><img src="Images/rock.png" title="Rock" alt="rock" width="100" height="100"></button>
+		<button class="buttons" id="paper"><img src="Images/paper.png" title="Paper" alt="paper" width="100" height="100"></button>
+		<button class="buttons" id="scissors"><img src="Images/scissors.png" title="Scissors" alt="scissors" width="100" height="100"></button>
+	</div>
+
+	<div>
+		<h3 class="font">Player vs Computer</h3>
+	</div>
+
+	<div class="font">
+    	<div class="score">	
+    		<span id="player_score">0</span> - <span id="computer_score">0</span>
+   	</div>	
+	</div>
+
+	<div class="result">
+	    <p id="message"> <br></p>
+	</div>
+
+	<div id="reset">
+		<button><img src="Images/reset.png" title="Reset" alt="reset button" width="100" height="100"></button>
+	</div>
+
+	
+<script>
+	let playerScore = 0;
+	let computerScore = 0;
+	let pScore = document.getElementById("player_score");
+	let cScore = document.getElementById("computer_score");
+	let result = document.getElementById("message");
+	const rock = document.getElementById("rock");
+	const paper = document.getElementById("paper");
+	const scissors = document.getElementById("scissors");
+	const reset = document.getElementById("reset");
+	rock.addEventListener('click', function(){
+	  playerSelect("Rock");
+	})
+	paper.addEventListener('click', function(){
+	  playerSelect("Paper");
+	})
+	scissors.addEventListener('click', function(){
+	  playerSelect("Scissors");
+	})
+	reset.addEventListener('click', function(){
+		location.reload();
+	})
+	function computerSelect(){
+	var arr = ['Rock', 'Paper', 'Scissors'];
+	  return arr[Math.floor(Math.random()*arr.length)];
+	};
+	function playerSelect(playerWeapon){
+	  let computerWeapon = computerSelect();
+	  if (playerWeapon === computerWeapon){
+	    tie(playerWeapon, computerWeapon);
+	  }
+	   else if (
+	    (playerWeapon == "Rock" && computerWeapon == "Scissors")||
+	    (playerWeapon == "Paper" && computerWeapon == "Rock")||
+	    (playerWeapon == "Scissors" && computerWeapon == "Paper"))
+	    {
+	    win(playerWeapon, computerWeapon);
+	  } 
+	  else {
+	    lose(playerWeapon, computerWeapon);
+	  }
+	  if (playerScore === 5 || computerScore === 5) {
+			if (playerScore < computerScore){
+				result.textContent = "Sorry, you lost the game! Let's play again";
+			} else if (playerScore > computerScore) {
+				result.textContent = "Hooray! You won the game! Let's play again";
+			} else {
+				result.textContent = "Wow! It's a tie! Let's play again";
+			}
+		}
+	}
+	function win(player, computer){
+	  playerScore++;
+	  pScore.innerHTML = playerScore;
+	  result.textContent="You win! "+ player +" beats "+ computer;
+	  console.log("You win! "+ player +" beats "+ computer);
+	}
+	function lose(player, computer){
+	  computerScore++;
+	  cScore.innerHTML = computerScore;
+	  result.textContent="You lost! "+ computer +" beats " + player;
+	  console.log("You lost! "+ computer +" beats " + player);
+	}
+	function tie(player, computer){
+	  result.textContent= "It's a tie! You both selected " + player ;
+	  console.log("It's a tie! You both selected " + player);
+	}
+</script>
+</body>
+</html>
+
